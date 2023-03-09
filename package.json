@@ -1,0 +1,20 @@
+{
+  "name": "node-libp2p-examples",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "main": "src/messaging.js",
+  "engines": {
+    "node": "18"
+  },
+  "dependencies": {
+    "@chainsafe/libp2p-noise": "^11.0.1",
+    "@libp2p/mplex": "^7.1.1",
+    "@libp2p/peer-id": "^2.0.2",
+    "@libp2p/tcp": "^6.1.2",
+    "@multiformats/multiaddr": "^11.6.1",
+    "it-pipe": "^2.0.5",
+    "it-to-buffer": "^3.0.1",
+    "libp2p": "^0.42.2"
+  }
+}
