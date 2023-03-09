@@ -13,8 +13,12 @@
     "@libp2p/mdns": "^7.0.0",
     "@libp2p/mplex": "^7.1.1",
     "@libp2p/peer-id": "^2.0.2",
+    "@libp2p/peer-id-factory": "^2.0.1",
     "@libp2p/tcp": "^6.1.2",
+    "@libp2p/websockets": "^5.0.5",
     "@multiformats/multiaddr": "^11.6.1",
+    "it-length-prefixed": "^8.0.4",
+    "it-map": "^2.0.1",
     "it-pipe": "^2.0.5",
     "it-to-buffer": "^3.0.1",
     "libp2p": "^0.42.2"
