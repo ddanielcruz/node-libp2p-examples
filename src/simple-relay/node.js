@@ -4,9 +4,11 @@ import { bootstrap } from '@libp2p/bootstrap'
 import { tcp } from '@libp2p/tcp'
 import { mplex } from '@libp2p/mplex'
 import { noise } from '@chainsafe/libp2p-noise'
+import { gossipsub } from '@chainsafe/libp2p-gossipsub'
+import { pubsubPeerDiscovery } from '@libp2p/pubsub-peer-discovery'
 
 // Define bootstrapers with hardcoded local IP and argument one if provided
-const bootstrapers = ['/ip4/192.168.18.211/tcp/53954/p2p/12D3KooWLupcacJY4SvhdApBiz6u6ivmmqfdz2Q31Afpm4Si1Zqg']
+const bootstrapers = ['/ip4/127.0.0.1/tcp/50000/p2p/12D3KooWLupcacJY4SvhdApBiz6u6ivmmqfdz2Q31Afpm4Si1Zqg']
 if (process.argv.length > 2) {
   bootstrapers.push(process.argv[2].trim())
 }
@@ -19,19 +21,14 @@ const node = await createLibp2p({
   transports: [tcp()],
   streamMuxers: [mplex()],
   connectionEncryption: [noise()],
+  pubsub: gossipsub({ allowPublishToZeroPeers: true }),
   peerDiscovery: [
     bootstrap({
       interval: 60e3,
       list: bootstrapers
-    })
-  ],
-  relay: {
-    enabled: true,
-    autoRelay: {
-      enabled: true,
-      maxListeners: 2
-    }
-  }
+    }),
+    pubsubPeerDiscovery({ interval: 1000 })
+  ]
 })
 
 node.addEventListener('peer:discovery', async evt => {

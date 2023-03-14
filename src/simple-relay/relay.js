@@ -7,6 +7,8 @@ import { tcp } from '@libp2p/tcp'
 import { mplex } from '@libp2p/mplex'
 import { noise } from '@chainsafe/libp2p-noise'
 import { createFromJSON } from '@libp2p/peer-id-factory'
+import { gossipsub } from '@chainsafe/libp2p-gossipsub'
+import { pubsubPeerDiscovery } from '@libp2p/pubsub-peer-discovery'
 
 // Load hardcoded peer ID from filesystem
 const filepath = path.resolve('src', 'simple-relay', 'relay-id.json')
@@ -17,14 +19,19 @@ const peerId = await createFromJSON(peerIdData)
 const relay = await createLibp2p({
   peerId,
   addresses: {
-    listen: ['/ip4/0.0.0.0/tcp/0']
+    listen: ['/ip4/0.0.0.0/tcp/50000']
   },
   transports: [tcp()],
   streamMuxers: [mplex()],
   connectionEncryption: [noise()],
+  pubsub: gossipsub({ allowPublishToZeroPeers: true }),
+  peerDiscovery: [pubsubPeerDiscovery({ interval: 1000 })],
   relay: {
     enabled: true,
     hop: {
+      enabled: true
+    },
+    advertise: {
       enabled: true
     }
   }
